@@ -63,6 +63,44 @@ public class StopWatchApp extends JFrame {
         content.add(createButtonsPanel(), c);
     }
 
+    private JPanel createDisplayPanel() {
+        JPanel dispPanel = new JPanel();
+        dispPanel.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(2,2,2,2);
+        JLabel hrsLabel = new JLabel("Hours", SwingConstants.CENTER);
+        JLabel minLabel = new JLabel("Minutes", SwingConstants.CENTER);
+        JLabel secLabel = new JLabel("Seconds", SwingConstants.CENTER);
+        c.gridx = 0;
+        c.gridy = 0;
+        dispPanel.add(hrsLabel,c);
+        c.gridx = 1;
+        dispPanel.add(minLabel, c);
+        c.gridx = 2;
+        dispPanel.add(secLabel);
+        hrsField = new JTextField("");
+        Font bigFont = hrsField.getFont().deriveFont(Font.PLAIN, 150f);
+        hrsField.setFont(bigFont);
+        hrsField.setColumns(2);
+        hrsField.setHorizontalAlignment(JTextField.CENTER);
+        minField = new JTextField("");
+        minField.setFont(bigFont);
+        minField.setColumns(2);
+        minField.setHorizontalAlignment(JTextField.CENTER);
+        secField = new JTextField("");
+        secField.setFont(bigFont);
+        secField.setColumns(2);
+        secField.setHorizontalAlignment(JTextField.CENTER);
+        c.gridx = 0;
+        c.gridy = 1;
+        dispPanel.add(hrsField, c);
+        c.gridx = 1;
+        dispPanel.add(minField, c);
+        c.gridx = 2;
+        dispPanel.add(secField, c);
+        return dispPanel;
+    }
+
 
     class ConfirmOnClose extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
