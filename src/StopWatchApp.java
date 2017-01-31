@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -101,6 +103,23 @@ public class StopWatchApp extends JFrame {
         return dispPanel;
     }
 
+    private JPanel createButtonsPanel() {
+        JPanel buttonsPanel = new JPanel();
+        ButtonActions actionListener = new ButtonActions();
+        buttonsPanel.setLayout(new GridLayout(1, 3));
+        startButton = new JButton("Start");
+        startButton.setSize(10, 60);
+        startButton.setActionCommand("start");
+        startButton.addActionListener(actionListener);
+        resetButton = new JButton("Reset");
+        resetButton.setSize(10, 60);
+        resetButton.setActionCommand("reset");
+        resetButton.addActionListener(actionListener);
+        buttonsPanel.add(startButton);
+        buttonsPanel.add(stopButton);
+        buttonsPanel.add(resetButton);
+        return buttonsPanel;
+    }
 
     class ConfirmOnClose extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
