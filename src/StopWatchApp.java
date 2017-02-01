@@ -111,6 +111,10 @@ public class StopWatchApp extends JFrame {
         startButton.setSize(10, 60);
         startButton.setActionCommand("start");
         startButton.addActionListener(actionListener);
+        stopButton = new JButton("Stop");
+        stopButton.setSize(10,60);
+        stopButton.setActionCommand("stop");
+        stopButton.addActionListener(actionListener);
         resetButton = new JButton("Reset");
         resetButton.setSize(10, 60);
         resetButton.setActionCommand("reset");
@@ -121,12 +125,63 @@ public class StopWatchApp extends JFrame {
         return buttonsPanel;
     }
 
+    private void createStopWatch() {
+        stopwatch = new StopWatch("StopWatchApp");
+        stopwatch.setStopwatchapp(this);
+    }
+
+    //Responsible for incrementing the values that represent the hour, minute, and second
+    public void incrementTime() {
+        this.sec = this.sec + 1;
+        if (this.sec == 60) {
+            this.min = this.min + 1;
+            this.sec = 0;
+            if (this.min == 60) {
+                this.hr = this.hr + 1;
+                this.min = 0;
+                if (this.hr == 24) {
+                    this.hr = 0;
+                }
+            }
+        }
+    }
+
+    //Responsible for setting the time on the screen
+    public void setTime() {
+        hrsField.setText(String.valueOf(hr));
+        minField.setText(String.valueOf(min));
+        secField.setText(String.valueOf(sec));
+    }
+
     class ConfirmOnClose extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
             int confirm = JOptionPane.showConfirmDialog(e.getWindow(), "Are you sure you want to exit?");
             if(confirm == 0) {
                 e.getWindow().dispose();
                 System.exit(0);
+            }
+        }
+    }
+
+    class ButtonActions implements ActionListener {
+        public void actionPerformed(ActionEvent evt) {
+            String actCommand = evt.getActionCommand();
+            if(actCommand.equalsIgnoreCase("reset")) {
+                hr = 0;
+                min = 0;
+                sec = 0;
+                setTime();
+            } else if (actCommand.equalsIgnoreCase("start")) {
+                System.out.println("Clicked start button");
+                if(!isWatchTicking) {
+                    createStopWatch();
+                    stopwatch.setRunFlag(true);
+                    stopwatch.start();
+                }
+                isWatchTicking = true;
+            } else if (actCommand.equalsIgnoreCase("stop")) {
+                isWatchTicking = false;
+                stopwatch.setRunFlag(false);
             }
         }
     }
